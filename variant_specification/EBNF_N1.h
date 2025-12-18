@@ -1,6 +1,15 @@
 /*
 Перевірка РБНФ №1 за допомогою коду
 (помістити у файл "EBNF_N1.h")
+
+специфікація мови:
+- program<name>; start var...; end
+- Оператори: read, write, if, else, while, break, continue
+- Присвоєння: :> (зліва направо)
+- Операції: add, -, mul, /, %, ==, !=, lt, gt, not, and, or
+- Тип даних: int32
+- Ідентифікатори: [A-Z][A-Z][0-9]
+- Коментар: /*...
 */
 
 
@@ -181,8 +190,8 @@ w, \
 x, \
 y, \
 z
-#define COMMENT_BEGIN_STR "#*"
-#define COMMENT_END_STR   "*#"
+#define COMMENT_BEGIN_STR "/*"
+#define COMMENT_END_STR   "*/"
 
 
 
@@ -195,46 +204,46 @@ tokenBEGINBLOCK = "{" >> BOUNDARIES;
 tokenENDBLOCK = "}" >> BOUNDARIES;
 tokenSEMICOLON = ";" >> BOUNDARIES;
 tokenCOLON = ":" >> BOUNDARIES;
-tokenGOTO = "GOTO" >> STRICT_BOUNDARIES;
-tokenINTEGER16 = "INTEGER16" >> STRICT_BOUNDARIES;
+tokenGOTO = "" >> STRICT_BOUNDARIES;
+tokenINTEGER16 = "int32" >> STRICT_BOUNDARIES;
 tokenCOMMA = "," >> BOUNDARIES;
 
-tokenNOT = "NOT" >> STRICT_BOUNDARIES;
+tokenNOT = "not" >> STRICT_BOUNDARIES;
 
-tokenAND = "AND" >> STRICT_BOUNDARIES;
+tokenAND = "and" >> STRICT_BOUNDARIES;
 
-tokenOR = "OR" >> STRICT_BOUNDARIES;
+tokenOR = "or" >> STRICT_BOUNDARIES;
 tokenEQUAL = "==" >> BOUNDARIES;
 tokenNOTEQUAL = "!=" >> BOUNDARIES;
-tokenLESSOREQUAL = "<=" >> BOUNDARIES;
-tokenGREATEROREQUAL = ">=" >> BOUNDARIES;
-tokenPLUS = "+" >> BOUNDARIES;
+tokenLESSOREQUAL = "lt" >> STRICT_BOUNDARIES;
+tokenGREATEROREQUAL = "gt" >> STRICT_BOUNDARIES;
+tokenPLUS = "add" >> STRICT_BOUNDARIES;
 tokenMINUS = "-" >> BOUNDARIES;
-tokenMUL = "*" >> BOUNDARIES;
-tokenDIV = "DIV" >> STRICT_BOUNDARIES;
-tokenMOD = "MOD" >> STRICT_BOUNDARIES;
-tokenLRASSIGN = "=:" >> BOUNDARIES;
+tokenMUL = "mul" >> STRICT_BOUNDARIES;
+tokenDIV = "/" >> BOUNDARIES;
+tokenMOD = "%" >> BOUNDARIES;
+tokenLRASSIGN = ":>" >> BOUNDARIES;
 
-tokenELSE = "ELSE" >> STRICT_BOUNDARIES;
-tokenIF = "IF" >> STRICT_BOUNDARIES;
+tokenELSE = "else" >> STRICT_BOUNDARIES;
+tokenIF = "if" >> STRICT_BOUNDARIES;
 
-tokenDO = "DO" >> STRICT_BOUNDARIES;
-tokenFOR = "FOR" >> STRICT_BOUNDARIES;
-tokenTO = "TO" >> STRICT_BOUNDARIES;
-tokenDOWNTO = "DOWNTO" >> STRICT_BOUNDARIES;
-tokenWHILE = "WHILE" >> STRICT_BOUNDARIES;
-tokenCONTINUE = "CONTINUE" >> STRICT_BOUNDARIES;
-tokenBREAK = "BREAK" >> STRICT_BOUNDARIES;
-tokenEXIT = "EXIT" >> STRICT_BOUNDARIES;
-tokenREPEAT = "REPEAT" >> STRICT_BOUNDARIES;
-tokenUNTIL = "UNTIL" >> STRICT_BOUNDARIES;
-tokenGET = "GET" >> STRICT_BOUNDARIES;
-tokenPUT = "PUT" >> STRICT_BOUNDARIES;
-tokenNAME = "NAME" >> STRICT_BOUNDARIES;
-tokenBODY = "BODY" >> STRICT_BOUNDARIES;
-tokenDATA = "DATA" >> STRICT_BOUNDARIES;
-tokenBEGIN = "BEGIN" >> STRICT_BOUNDARIES;
-tokenEND = "END" >> STRICT_BOUNDARIES;
+tokenDO = "" >> STRICT_BOUNDARIES;
+tokenFOR = "" >> STRICT_BOUNDARIES;
+tokenTO = "" >> STRICT_BOUNDARIES;
+tokenDOWNTO = "" >> STRICT_BOUNDARIES;
+tokenWHILE = "while" >> STRICT_BOUNDARIES;
+tokenCONTINUE = "continue" >> STRICT_BOUNDARIES;
+tokenBREAK = "break" >> STRICT_BOUNDARIES;
+tokenEXIT = "" >> STRICT_BOUNDARIES;
+tokenREPEAT = "" >> STRICT_BOUNDARIES;
+tokenUNTIL = "" >> STRICT_BOUNDARIES;
+tokenGET = "read" >> STRICT_BOUNDARIES;
+tokenPUT = "write" >> STRICT_BOUNDARIES;
+tokenNAME = "program" >> STRICT_BOUNDARIES;
+tokenBODY = "start" >> STRICT_BOUNDARIES;
+tokenDATA = "var" >> STRICT_BOUNDARIES;
+tokenBEGIN = "" >> STRICT_BOUNDARIES;
+tokenEND = "end" >> STRICT_BOUNDARIES;
 
 
 labeled_point = ident >> tokenCOLON;
@@ -361,7 +370,7 @@ ident =
 	tokenRIGHTSQUAREBRACKETS |
 	tokenSEMICOLON
 	) >>
-	tokenUNDERSCORE >> letter_in_upper_case >> letter_in_upper_case >> letter_in_upper_case >> letter_in_upper_case >> letter_in_upper_case >> letter_in_upper_case >> letter_in_upper_case >> STRICT_BOUNDARIES;
+	letter_in_upper_case >> letter_in_upper_case >> digit >> STRICT_BOUNDARIES;
 A = "A";
 B = "B";
 C = "C";
